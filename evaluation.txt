@@ -5,7 +5,8 @@ Team 6 - Matt Cook, Chloe Calvarin
 - We defined an outline of our ‘ideal’ syntax over the weekend. Instead of 
 listing a rule for every possible state and surroundings, we want to be able to
 say, for a ‘state,’ here are the directions we wish to go in, in priority 
-order. If the first is blocked by a wall, then try the second direction, if that’s blocked by a wall, try the third, etc.
+order. If the first is blocked by a wall, then try the second direction, if 
+that’s blocked by a wall, try the third, etc.
 - Instead of keeping to the basic cardinal directions, we prefer using ‘Front, 
 Right, Back, Left,’ as our direction to travel in, which means that the ‘state’ 
 variable will actually only store the direction we’re facing, in cardinal 
