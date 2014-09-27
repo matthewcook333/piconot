@@ -1,0 +1,35 @@
+Team 6 - Matt Cook, Chloe Calvarin
+
+
+9/23
+- We defined an outline of our ‘ideal’ syntax over the weekend. Instead of 
+listing a rule for every possible state and surroundings, we want to be able to
+say, for a ‘state,’ here are the directions we wish to go in, in priority 
+order. If the first is blocked by a wall, then try the second direction, if 
+that’s blocked by a wall, try the third, etc.
+- Instead of keeping to the basic cardinal directions, we prefer using ‘Front, 
+Right, Back, Left,’ as our direction to travel in, which means that the ‘state’ 
+variable will actually only store the direction we’re facing, in cardinal 
+terms, NESW.
+- We also played around with possible sillier ways to word our commands, but 
+for now we will work on implementing something that ideally looks like:
+
+	FacingDirection -> Direction1, Direction2, Direction3, Direction4
+	N -> Front, Left, Right, Back
+
+	
+- For now, we are thinking of implementing it with -> being a method on the 
+facing direction object, (we’re calling this a “CardinalState”) that takes in a 
+list of 4relative directions. This forces us to have parenthesis, so it’s, say 
+a Delta 3 on syntax change.
+
+	N ->(F, L, R, B)
+
+- We discussed different ways to implement this. Either we have a hard-coded 
+rule-generator that takes each facing direction and translates the priority 
+list of relative directions into standard picot rules, or we map the pairs of 
+facing and relative directions to a move direction, and then go from there. The 
+later would require less code, but it might be more error-prone. This has not 
+yet become a change in the syntax.
+
+- Done for now, today was mostly discussion and figuring out the API.
