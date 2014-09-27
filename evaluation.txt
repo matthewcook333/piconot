@@ -33,3 +33,25 @@ later would require less code, but it might be more error-prone. This has not
 yet become a change in the syntax.
 
 - Done for now, today was mostly discussion and figuring out the API.
+
+9/27
+- We decided to go with the mapping of cardinal and relative direction to a 
+MoveDirection. This way, we can just have a general translation of our 
+language into the Rules with MoveDirection so there won't be a lot of 
+duplicated code.
+- We had each state with a name of a number, but now changed it to the names of 
+CardinalStates as that makes more sense as ultimately there are only 4 states, 
+one for each Cardinal direction.
+- After this, we decided to test what we currently have with the Empty.scala 
+file and got it to work after fixing some simple syntax and type issues 
+(we were trying to pass in a list of Directions rather than repeated parameters
+for our "->" method).
+- We got it to work for the empty room! It took a little reasoning to figure out
+how we could basically sweep over whole room (err... we swear it is good syntax 
+design!...) but figured out that if we are sweeping right, the moment we need to
+go west (as in hit the corner), we should go ALL the way west, and repeat the 
+sweeping.
+- We now want to figure out a way to get rid of the necessity of calling flatten
+as we have a list of list of rules, and cannot quite figure out how to make a 
+def (called like "begin" or something) that would take in the list of list of 
+rules and simply flatten them. But we are done here for the day!
