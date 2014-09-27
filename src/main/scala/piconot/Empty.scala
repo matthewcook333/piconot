@@ -14,10 +14,10 @@ object Empty extends JFXApp {
   val emptyMaze = Maze("resources" + File.separator + "empty.txt")
   
   val rules = List(
-	N arrow(F, R, B, L),
+	N arrow(F, R, L, B),
 	S arrow(F, L, B, R),
 	E arrow(R, L, F, B),
-	W arrow(L, R, F, B)
+	W arrow(F, L, R, B)
   ).flatten
   
   object EmptyBot extends Picobot(emptyMaze, rules)
