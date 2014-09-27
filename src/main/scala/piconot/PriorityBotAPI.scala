@@ -24,19 +24,109 @@ object PriorityBotAPI extends JFXApp {
 
 }
 
-
-class PriorityRule {  
-  def ->()
-  
-  
-  
-  
+// state we are in
+abstract class CardinalState(val name: Char) {
+	
+	// make a mapping of this, and make the states the "MoveDirection". That way
+	// we can generalize to just implement in cardinal state
+	// map ((cardinalState, direction) => (MoveDirection))
+	val moveDirMap = Map((('N', F) -> North), (('S', F) -> South), 
+						 (('E', F) -> East),  (('W', F) -> West), 
+						 (('N', B) -> South), (('S', B) -> North), 
+						 (('E', B) -> West),  (('W', B) -> East), 
+						 (('N', L) -> West),  (('S', L) -> East), 
+						 (('E', L) -> North), (('W', L) -> South), 
+						 (('N', R) -> East),  (('S', R) -> West), 
+						 (('E', R) -> South), (('W', R) -> North))
+	
+	// method for determining the list of rules from the priority list
+	def arrow(directions: RelativeDirection*)	: List[Rule] = {
+	    var listOfRules = new MutableList[Rule]
+		var blockedDirs = new Surroundings(Anything, Anything, Anything, Anything)
+	    
+	    // Go through the priority list of directions
+		directions.foreach(direction => {
+		  val moveDirection = moveDirMap((name, direction))  
+		  moveDirection match {
+		    case North => {
+		      listOfRules += new Rule(State(name.toString), 
+		            Surroundings(	Open, 
+		            			 	blockedDirs.east, 
+		            			 	blockedDirs.west, 
+		            			 	blockedDirs.south),
+		            moveDirection,
+		            State("N"))
+		      blockedDirs = new Surroundings(	Blocked, 
+									            blockedDirs.east, 
+									            blockedDirs.west, 
+									            blockedDirs.south	)
+		    }
+		    case South => {
+		      listOfRules += new Rule(State(name.toString), 
+		            Surroundings(	blockedDirs.north , 
+		            				blockedDirs.east, 
+		            				blockedDirs.west, 
+		            				Open),
+		            moveDirection,
+		            State("S"))
+		      blockedDirs = new Surroundings(	blockedDirs.north, 
+									            blockedDirs.east, 
+									            blockedDirs.west, 
+									            Blocked	)
+		    }
+		    case East => {
+		      listOfRules += new Rule(State(name.toString), 
+		            Surroundings(	blockedDirs.north, 
+		            				Open, 
+		            				blockedDirs.west, 
+		            				blockedDirs.south),
+		            moveDirection,
+		            State("E"))
+		      blockedDirs = new Surroundings(	blockedDirs.north, 
+									            Blocked, 
+									            blockedDirs.west, 
+									            blockedDirs.south	)
+		    }
+		    case West => {
+		      listOfRules += new Rule(State(name.toString), 
+		            Surroundings(	blockedDirs.north, 
+		            				blockedDirs.east, 
+		            				Open, 
+		            				blockedDirs.south),
+		            moveDirection,
+		            State("W"))
+		      blockedDirs = new Surroundings(	blockedDirs.north, 
+									            blockedDirs.east, 
+									            Blocked, 
+									            blockedDirs.south	)
+		    }
+			
+		  }}
+		)
+		
+		return listOfRules.toList
+	}		 
 }
 
-// state we are in
-abstract class CardinalState(val name: Char)
 
-object N extends CardinalState('N') {
+// directions the picobot is facing.
+object N extends CardinalState('N')
+object S extends CardinalState('S')
+object E extends CardinalState('E')
+object W extends CardinalState('W')
+
+// direction moving relative
+abstract class RelativeDirection(val name: Char)
+
+object F extends RelativeDirection('F')
+object B extends RelativeDirection('B')
+object L extends RelativeDirection('L')
+object R extends RelativeDirection('R')
+
+
+  
+  /*
+   
   def ->(directions: List[RelativeDirection]) {
     // have a nice requires here for 4 directions
     
@@ -48,37 +138,17 @@ object N extends CardinalState('N') {
             Surroundings(Open, blockedDirs.east, blockedDirs.west, blockedDirs.south),
             North,
             State("0"))
-        blockedDirs = new Surroundings(Blocked, blockedDirs.east, blockedDirs.west, blockedDirs.south)
+        blockedDirs = new Surroundings(Blocked, 
+							            blockedDirs.east, 
+							            blockedDirs.west, 
+							            blockedDirs.south)
       case B =>
       case L =>
       case R =>
       case _ =>
     }
     )
-    
-  } 
-}
-// make a mapping of this, and make the states the "MoveDirection". That way
-// we can generalize to just implement in cardinal state
-map ((cardinalState, direction) => (MoveDirection)
-
-object S extends CardinalState('S')
-
-object E extends CardinalState('E')
-
-object W extends CardinalState('W')
-
-// direction moving relative
-abstract class RelativeDirection(val name: Char)
-
-object F extends RelativeDirection('F')
-
-object B extends RelativeDirection('B')
-
-object L extends RelativeDirection('L')
-
-object R extends RelativeDirection('R')
-
-
+     } 
+   */
 
 
