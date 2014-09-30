@@ -1,0 +1,17 @@
+Names: Chloe Calvarin and Matt Cook
+CS111 - Domain-Specific Languages
+
+PriorityBot EBNF
+
+picobot = 'makeRules(' , 3 * (rule, ','), rule, ')';
+
+rule = cardinalDirection, whitespace, '->(', 3 * (relativeDirection, ','), relativeDirection, ')';
+
+cardinalDirection = N | E | W | S;
+
+relativeDirection = F | B | L | R;
+
+opt whitespace = {' ', '\t'};
+
+whitespace = [' ', '\t'], opt whitespace;
+

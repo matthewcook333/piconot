@@ -18,10 +18,12 @@ import picolib.semantics.West
 import scalafx.application.JFXApp
 import scala.collection.mutable.MutableList
 
-/* This is an intentionally GOOD internal language */
 
-object PriorityBotAPI extends JFXApp {
 
+object makeRules {
+  def apply(dir1 :List[Rule], dir2 :List[Rule], dir3 :List[Rule], dir4 :List[Rule]) : List[Rule] = {
+  		return List(dir1, dir2, dir3, dir4).flatten
+  	}
 }
 
 // state we are in
@@ -40,7 +42,7 @@ abstract class CardinalState(val name: Char) {
 						 (('E', R) -> South), (('W', R) -> North))
 	
 	// method for determining the list of rules from the priority list
-	def arrow(directions: RelativeDirection*)	: List[Rule] = {
+	def ->(directions: RelativeDirection*)	: List[Rule] = {
 	    var listOfRules = new MutableList[Rule]
 		var blockedDirs = new Surroundings(Anything, Anything, Anything, Anything)
 	    
@@ -123,32 +125,5 @@ object B extends RelativeDirection('B')
 object L extends RelativeDirection('L')
 object R extends RelativeDirection('R')
 
-
-  
-  /*
-   
-  def ->(directions: List[RelativeDirection]) {
-    // have a nice requires here for 4 directions
-    
-    var listOfRules = new MutableList[Rule]
-    var blockedDirs = new Surroundings(Anything, Anything, Anything, Anything)
-    directions.foreach(direction => direction match {
-      case F => 
-        listOfRules += new Rule(State("0"),
-            Surroundings(Open, blockedDirs.east, blockedDirs.west, blockedDirs.south),
-            North,
-            State("0"))
-        blockedDirs = new Surroundings(Blocked, 
-							            blockedDirs.east, 
-							            blockedDirs.west, 
-							            blockedDirs.south)
-      case B =>
-      case L =>
-      case R =>
-      case _ =>
-    }
-    )
-     } 
-   */
 
 

@@ -13,13 +13,13 @@ import scalafx.application.JFXApp
 object Empty extends JFXApp {
   val emptyMaze = Maze("resources" + File.separator + "empty.txt")
   
-  val rules = List(
-	N arrow(F, R, L, B),
-	S arrow(F, L, B, R),
-	E arrow(R, L, F, B),
-	W arrow(F, L, R, B)
-  ).flatten
-  
+  val rules = makeRules(
+	N ->(F, R, L, B),
+	S ->(F, L, B, R),
+	E ->(R, L, F, B),
+	W ->(F, L, R, B)
+  )
+    
   object EmptyBot extends Picobot(emptyMaze, rules)
   		with TextDisplay with GUIDisplay
 
