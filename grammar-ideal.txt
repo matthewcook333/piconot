@@ -1,0 +1,17 @@
+Names: Chloe Calvarin and Matt Cook
+CS111 - Domain-Specific Languages
+
+Ideal EBNF
+
+picobot = EOF | rule, picobot;
+
+rule = cardinalDirection, whitespace, '->', whitespace, 4 * relativeDirection;
+
+cardinalDirection = N | E | W | S;
+
+relativeDirection = F | B | L | R | Front | Back | Left | Right;
+
+opt whitespace = {' ', '\t'};
+
+whitespace = [' ', '\t'], opt whitespace;
+

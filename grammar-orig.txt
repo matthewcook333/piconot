@@ -1,3 +1,6 @@
+Names: Chloe Calvarin and Matt Cook
+CS111 - Domain-Specific Languages
+
 Picobot EBNF
 
 picobot = EOF | (rule | comment), opt whitespace, '\n', picobot;

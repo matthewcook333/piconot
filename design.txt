@@ -1,16 +1,56 @@
+Names: Chloe Calvarin and Matt Cook
+CS111 - Domain-Specific Languages
+
+Notes on design:
+1.) based on our direction (relative direction)
+2.) front, left, right, back
+3.) 4 states - N, E, W, S
+4.) In each state, you have a priority list of directions you want to move in, if you can't move in that direction, then go to the next one in list.
+
+Our picobot design involves maze navigation using a combination of relative and cardinal directions. There are four "states": N, E, W, and S. In each state, you have a priority list of relative directions picobot should try to go in. 
+
+Ideas for what to name each direction (may not be actual part of syntax, but could be fun to add to make language more novel):
+forward - "continue your quest"
+back - "turn tail and flee"
+right - "always look on the right side of life"
+left - "we don't have any arms left"
+
+N - "Norf"
+E - "Mildred"
+W - "WIBSTR"
+S - "Marks"
+
+If facing [NEWS], then [fbrl].
+
+
+Questions
+
 Who is the target for this design, e.g., are you assuming any knowledge on the
 part of the language users?
+
+A general user that would like to solve picobot mazes (say, a student) that can reason about relative directions based on their current cardinal direction.
 
 Why did you choose this design, i.e., why did you think it would be a good idea
 for users to express the maze-searching computation using this syntax?
 
+One of our friends in CS 5 mentioned about the difficulty they were having with picobot because it was hard to reason about the the states and purely Cardinal directions (particularly for the maze one where they are supposed to use the right hand rule). We figured this mix of the two types of directions would make it very easy to solve this type of maze.
+
 What behaviors are easier to express in your design than in Picobot’s original
 design?  If there are no such behaviors, why not?
+
+The right hand rule behavior is very easy to express! We want to always try to go right, if not, go forward. This is easy because for each given direction, we can give a priority of relative directions to try and move in.
 
 What behaviors are more difficult to express in your design than in Picobot’s
 original design? If there are no such behaviors, why not?
 
+It is a bit harder to have more specific, flexible states as we are essentially limiting the language to 4 states with 4 paths each rather than an arbitrary number. Specifically, it could be slightly harder to reason about, say, the empty maze because we have no ability for an initial state of getting to some corner before sweeping.
+
 On a scale of 1–10 (where 10 is “very different”), how different is your syntax
 from PicoBot’s original design?
 
+It is pretty similar overall we would say, although the reasoning to use it is different with the idea of relative directions, so likely 5 or 6.
+
 Is there anything you don’t like about your design?
+
+We aren't sure how good/possible it would actually be good at solving more complicated mazes (i.e. the extra credit), and so the limited behavior may be something to dislike (although we personally do like it as the point is that it is good at solving the two required picobot mazes).
+
