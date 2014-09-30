@@ -20,7 +20,7 @@ for now we will work on implementing something that ideally looks like:
 	
 - For now, we are thinking of implementing it with -> being a method on the 
 facing direction object, (we’re calling this a “CardinalState”) that takes in a 
-list of 4relative directions. This forces us to have parenthesis, so it’s, say 
+list of 4 relative directions. This forces us to have parenthesis, so it’s, say 
 a Delta 3 on syntax change.
 
 	N ->(F, L, R, B)
@@ -50,8 +50,59 @@ for our "->" method).
 how we could basically sweep over whole room (err... we swear it is good syntax 
 design!...) but figured out that if we are sweeping right, the moment we need to
 go west (as in hit the corner), we should go ALL the way west, and repeat the 
-sweeping.
+sweeping. Our 'internal DSL' that creates a list of picobot now looks like this
+for the solution to the empty room:
+
+	List(
+		N ->(F, R, L, B),
+		S ->(F, L, B, R),
+		E ->(R, L, F, B),
+		W ->(F, L, R, B)
+	).flatten
+
 - We now want to figure out a way to get rid of the necessity of calling flatten
 as we have a list of list of rules, and cannot quite figure out how to make a 
 def (called like "begin" or something) that would take in the list of list of 
 rules and simply flatten them. But we are done here for the day!
+
+9/29
+- We finalized our grammar. We wanted to hide the necessary 'flatten, so we 
+tried implicit conversions, package object defs, and more, and for some reason,
+the compiler was unhappy.
+- We then made an object with an apply method, and that worked! Our syntax to
+make our list of rules now looks like:
+
+	makeRules(
+		N ->(F, R, L, B),
+		S ->(F, L, B, R),
+		E ->(R, L, F, B),
+		W ->(F, L, R, B)
+	)
+
+- I think this counts as a \Delta 1 change. We were thinking our DSL would only
+be the list of N ->(), and now we have to include the wrapping object that 
+condenses it to a List[Rule] instead of a List[List[Rule]]. The List() would 
+have been necessary regardless, due to how the picobot library was construed, 
+so this is more of a slight extension of our DSL's scope than a major change.
+
+- We now need to define our actual grammar and things.
+
+---------
+
+'Official' evaluation questions:
+
+On a scale of 1–10 (where 10 is "a lot"), how much did you have to change 
+your syntax? 
+
+- We changed 7/10. As we went through, we didn't have to change our general idea,
+so much as adapt to fit our idea into the general provided API syntax. Our main
+change was the inclusion of parenthesis in the initial steps.
+
+On a scale of 1–10 (where 10 is "very difficult"), how difficult was it to map 
+your syntax to the semantics?
+
+- Our main difficulty was with properly using Scala. We tried many possible 
+solutions from the 'embarrassment of riches' in order to hide the Scala 
+overhead, until we landed on a working solution. We would give this a score 
+of 6.
+
